@@ -5,7 +5,7 @@ defmodule ShardWeb.Router do
   import Phoenix.Controller
   import Phoenix.LiveView.Router
 
-pipeline :browser do
+  pipeline :browser do
     plug :accepts, ["html"]
     plug :fetch_session
     plug :fetch_live_flash
@@ -14,10 +14,10 @@ pipeline :browser do
     plug :put_secure_browser_headers
     plug ShardWeb.Plugs.FetchCurrentUser
   end
-pipeline :admin do
+
+  pipeline :admin do
     plug ShardWeb.Plugs.RequireAdmin
   end
-
 
   pipeline :api do
     plug :accepts, ["json"]
@@ -32,7 +32,7 @@ pipeline :admin do
   end
 
   # ---- Admin CRUD (Rooms, Exits) ----
-scope "/admin", ShardWeb.Admin do
+  scope "/admin", ShardWeb.Admin do
     pipe_through [:browser, :admin]
 
     resources "/rooms", RoomController
