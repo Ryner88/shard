@@ -11,3 +11,6 @@ this project:
  - Rider McCallum [rsm1055@usnh.edu]
  - Cameron Hanna [cjh1178@usnh.edu]
  - Tyler Smallidge [tjs1143@usnh.edu]
+ - Gabriel Bauer (gjb1023@usnh.edu)
+ - Jasem Jarrar (jmj1029@usnh.edu)
+ - Oluwatofunmi S. Badejo (osb1004@usnh.edu)

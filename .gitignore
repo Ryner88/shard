@@ -1,6 +1,10 @@
 # The directory Mix will write compiled artifacts to.
 /_build/
 
+# Assets
+# FIXME: This will break simple hard-coded assets.
+/priv/static/*
+
 # If you run "mix test --cover", coverage assets end up here.
 /cover/
 
@@ -36,3 +40,7 @@ npm-debug.log
 /assets/node_modules/
 
 .aider*
+.env
+
+# Local backup files
+*.bak.*

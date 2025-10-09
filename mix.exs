@@ -11,23 +11,25 @@ defmodule Shard.MixProject do
       aliases: aliases(),
       deps: deps(),
       compilers: [:phoenix_live_view] ++ Mix.compilers(),
-      listeners: [Phoenix.CodeReloader]
+      listeners: [Phoenix.CodeReloader],
+      test_coverage: [
+        summary: [threshold: 19]
+      ],
+      # Fail compilation warnings only when running in CI
+      elixirc_options: [warnings_as_errors: System.get_env("CI") == "true"],
+      # Make custom tasks run in the test env by default
+      preferred_cli_env: [
+        precommit: :test,
+        "test.no_warn": :test
+      ]
     ]
   end
 
   # Configuration for the OTP application.
-  #
-  # Type `mix help compile.app` for more information.
   def application do
     [
       mod: {Shard.Application, []},
       extra_applications: [:logger, :runtime_tools]
-    ]
-  end
-
-  def cli do
-    [
-      preferred_envs: [precommit: :test]
     ]
   end
 
@@ -36,10 +38,9 @@ defmodule Shard.MixProject do
   defp elixirc_paths(_), do: ["lib"]
 
   # Specifies your project dependencies.
-  #
-  # Type `mix help deps` for examples and options.
   defp deps do
     [
+      {:argon2_elixir, "~> 4.0"},
       {:phoenix, "~> 1.8.1"},
       {:phoenix_ecto, "~> 4.5"},
       {:ecto_sql, "~> 3.13"},
@@ -70,11 +71,6 @@ defmodule Shard.MixProject do
   end
 
   # Aliases are shortcuts or tasks specific to the current project.
-  # For example, to install project dependencies and perform other setup tasks, run:
-  #
-  #     $ mix setup
-  #
-  # See the documentation for `Mix` for more info on aliases.
   defp aliases do
     [
       setup: ["deps.get", "ecto.setup", "assets.setup", "assets.build"],
@@ -88,7 +84,8 @@ defmodule Shard.MixProject do
         "esbuild shard --minify",
         "phx.digest"
       ],
-      precommit: ["compile --warning-as-errors", "deps.unlock --unused", "format", "test"]
+      # NOTE: correct flag is --warnings-as-errors (plural)
+      precommit: ["compile --warnings-as-errors", "deps.unlock --unused", "format", "test"]
     ]
   end
 end

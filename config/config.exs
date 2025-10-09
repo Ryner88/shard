@@ -7,6 +7,23 @@
 # General application configuration
 import Config
 
+config :shard, :open_router,
+  api_key: System.get_env("OPENROUTER_API_KEY"),
+  model: "x-ai/grok-4-fast:free"
+
+config :shard, :scopes,
+  user: [
+    default: true,
+    module: Shard.Users.Scope,
+    assign_key: :current_scope,
+    access_path: [:user, :id],
+    schema_key: :user_id,
+    schema_type: :id,
+    schema_table: :users,
+    test_data_fixture: Shard.UsersFixtures,
+    test_setup_helper: :register_and_log_in_user
+  ]
+
 config :shard,
   ecto_repos: [Shard.Repo],
   generators: [timestamp_type: :utc_datetime]
